@@ -1,4 +1,5 @@
 ﻿using DataAccess.Abstract.Entity;
+using DataAccess.Context;
 using Entity.Abstract.Entity;
 using System;
 using System.Collections.Generic;
@@ -88,6 +89,32 @@ namespace DataAccess.Concrete.Entity
 
         public TEntity GetWithInclude(Expression<Func<TEntity, bool>>? filter = null, List<string>? includes = null)
         {
+            var where = "";
+            var join = "";
+            if (filter != null)
+            {
+                where = $"WHERE {ParseTree(filter.Body, filter.Parameters[0])}";
+            }
+            if(includes != null)
+            {
+                foreach (var item in includes)
+                {
+                    var tables = SqlClientContext.tables;
+                    var property = tables[item];
+
+                    //One to One
+
+                    //One to Many
+
+                    //Many to One
+
+                    //Many to Many
+
+                    //@TODO : Create a class that holds relation names.
+                    //Then look for each others properties for relation type
+                }
+            }
+
             throw new NotImplementedException();
         }
 

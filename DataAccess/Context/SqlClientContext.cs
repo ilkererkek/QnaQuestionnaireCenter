@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Context
 {
-    public class SqlClientContext
+    public static class SqlClientContext
     {
-        private string connectionString = "";
 
-        private Dictionary<IEntity, string> tables;
+        public static Dictionary<string,Type>? tables { get; set; }
     }
 }
