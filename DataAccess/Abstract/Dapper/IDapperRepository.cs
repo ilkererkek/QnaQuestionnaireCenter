@@ -15,8 +15,8 @@ namespace DataAccess.Abstract.Dapper
 
         void Delete(Guid Id);
 
-        T? Get(object parameters, string RawSql);
+        T? Get(object parameters, string where = "Id = @Id", List<string>? include = null);
 
-        IList<T> GetList( object parameters, string RawSql);
+        IList<T> GetList(object parameters, string where = "Id = @Id", List<string>? include = null);
     }
 }

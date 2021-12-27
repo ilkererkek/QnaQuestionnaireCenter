@@ -47,57 +47,45 @@ namespace DataAccess.Concrete
             throw new NotImplementedException();
         }
 
-        public Questionnaire? Get(object parameters , string RawSql = "SELECT * FROM Questionnaires WHERE Id = @Id")
+        public Questionnaire? Get(object parameters, string where = "Id = @Id", List<string>? include = null)
         {
-            using (var connection = new SqlConnection(_configuration.ConnectionString))
+            if(include == null || include.Count == 0)
             {
-                return connection.Query<Questionnaire>(RawSql,parameters).FirstOrDefault();
-            }
-        }
 
-        public IList<Questionnaire> GetList(object parameters, string RawSql = "SELECT * FROM Questionnaires")
-        {
-            using (var connection = new SqlConnection(_configuration.ConnectionString))
+            }
+            else if (include.Contains("Users") && include.Contains("Questions"))
             {
-                return connection.Query<Questionnaire>(RawSql, parameters).ToList();
+
             }
-        }
-
-        public IList<Questionnaire> GetListWithQuestions(object parameters, string RawSql = "SELECT * FROM Questionnaires LEFT JOIN ON ")
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<Questionnaire> GetListWithQuestionsAndUsers(object parameters, string RawSql)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IList<Questionnaire> GetListWithUsers(object parameters, string RawSql)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Questionnaire? GetWithQuestions(object parameters, string RawSql)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Questionnaire? GetWithQuestionsandUsers(object parameters, string RawSql)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Questionnaire? GetWithUsers(object parameters, 
-            string RawSql = "SELECT * FROM Questionnaires LEFT JOIN QuestionnaireUser QU on Questionnaires.Id = QU.QuestionnairesId " +
-                            "LEFT JOIN Users U on Questionnaires.Name = U.Name")
-        {
-           
-            using (var connection = new SqlConnection(_configuration.ConnectionString))
+            else if (include.Contains("Users"))
             {
-                var QuestionnaireDict = new Dictionary<Guid, Questionnaire>();
-            }
 
+            }
+            else if (include.Contains("Questions"))
+            {
+
+            }
+            throw new NotImplementedException();
+        }
+
+        public IList<Questionnaire> GetList(object parameters, string where = "Id = @Id", List<string>? include = null)
+        {
+            if (include == null || include.Count == 0)
+            {
+
+            }
+            else if (include.Contains("Users") && include.Contains("Questions"))
+            {
+
+            }
+            else if (include.Contains("Users"))
+            {
+
+            }
+            else if (include.Contains("Questions"))
+            {
+
+            }
             throw new NotImplementedException();
         }
 
