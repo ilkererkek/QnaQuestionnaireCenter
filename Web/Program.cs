@@ -4,6 +4,8 @@ using Bussiness.DependencyInjection.Autofac;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<DataAccess.Utils.IConfiguration>(new DataAccess.Utils.Configuration() { ConnectionString = builder.Configuration.GetConnectionString("DefeaultConnection") });
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBussinessModule()));
 
 
