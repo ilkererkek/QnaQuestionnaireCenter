@@ -8,7 +8,9 @@ namespace Entity.Concrete.Enums
 {
     public enum QuestionnaireStatus
     {
-        DEFEAULT = 0,
-        SECOND = 1,
+        CREATED = 0,
+        DRAFT = 1,
+        PUBLISHED = 2,
+        ENDED = 3
     }
 }

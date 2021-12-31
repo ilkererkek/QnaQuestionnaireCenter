@@ -10,6 +10,11 @@ namespace Entity.Concrete
 {
     public class Questionnaire : BaseEntity
     {
+
+        public Questionnaire() : base()
+        {
+
+        }
         public string Name { get; set; }
         public string? Description { get; set; }
         public bool IsHidden { get; set; }

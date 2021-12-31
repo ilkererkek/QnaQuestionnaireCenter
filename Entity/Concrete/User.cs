@@ -10,6 +10,10 @@ namespace Entity.Concrete
 {
     public class User : BaseEntity
     {
+        public User() : base()
+        {
+
+        }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string? Organization { get; set; }

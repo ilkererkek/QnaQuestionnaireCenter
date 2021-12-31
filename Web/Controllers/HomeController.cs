@@ -15,6 +15,7 @@ namespace Web.Controllers
 
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated) ;
             return View();
         }
 

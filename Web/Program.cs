@@ -1,14 +1,29 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Bussiness.DependencyInjection.Autofac;
+using DataAccess.Utils;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBussinessModule()));
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(options => {
+    options.ExpireTimeSpan = TimeSpan.FromDays(7);
+    options.Cookie.Name = "authcookie";
+    options.LoginPath = "/Auth/Login";
+    options.LogoutPath = "/Auth/Logout";
+});
+
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddSingleton<IConfig>(new Config() { ConnectionString = builder.Configuration.GetConnectionString("Default") });
+
 
 var app = builder.Build();
 
@@ -28,7 +43,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -1,4 +1,8 @@
 ﻿using Autofac;
+using Bussiness.Abstract;
+using Bussiness.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +16,13 @@ namespace Bussiness.DependencyInjection.Autofac
 
         protected override void Load(ContainerBuilder builder)
         {
-            base.Load(builder);
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<UserManager>().As<IUserService>();
+
+
+            builder.RegisterType<QuestionnaireRepository>().As<IQuestionnaireRepository>();
+            builder.RegisterType<QuestionnaireManager>().As<IQuestionnaireService>();
+
         }
     }
 }
