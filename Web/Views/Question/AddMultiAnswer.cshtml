@@ -1,0 +1,28 @@
+﻿@model Entity.Concrete.MultiAnswer
+
+@{
+    ViewData["Title"] = "AddMultiAnswer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center align-content-center my-5">
+    <div class="col-md-4 justify-content-center align-content-center">
+        <form asp-action="AddMultiAnswer">
+            <h1>Add Option</h1>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group py-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" value = "@Model.Id"/>
+            <input type="hidden" asp-for="QuestionId" value="@Model.QuestionId"/>
+            <div class="form-group py-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-primary-outline" asp-action="Details" asp-controller="Questionnaire" asp-route-id = "@ViewBag.QuestionnaireId">Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+

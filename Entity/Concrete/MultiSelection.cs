@@ -13,8 +13,8 @@ namespace Entity.Concrete
         public Guid MultiAnswerId { get; set; }
         public Guid TakenQuestionnaireId { get; set; }
 
-        public virtual TakenQuestionnaire TakenQuestionnaire { get; set; }
-        public virtual MultiAnswer MultiAnswer { get; set; }
+        public virtual TakenQuestionnaire? TakenQuestionnaire { get; set; }
+        public virtual MultiAnswer? MultiAnswer { get; set; }
 
     }
 }

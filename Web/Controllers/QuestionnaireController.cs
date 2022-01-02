@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using System.Security.Claims;
 using Entity.Concrete;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class QuestionnaireController : Controller
     {
 
@@ -49,6 +51,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var id = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
                 var res = _questionnaireService.Add(model.ToQuestionnaire(),id);
                 if(res != null)
@@ -63,22 +66,30 @@ namespace Web.Controllers
         // GET: QuestionnaireController/Edit/5
         public ActionResult Edit(Guid id)
         {
-            return PartialView(new Questionnaire());
+            var questionnaire = _questionnaireService.GetById(id);
+            if(questionnaire != null)
+            {
+                return PartialView(questionnaire);
+            }
+            return NotFound();
         }
 
         // POST: QuestionnaireController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Questionnaire model)
         {
-            try
+            if(model.Id != null)
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    var res = _questionnaireService.Update(model);
+                }
+                var questionnaire = _questionnaireService.GetWithQuestions(model.Id);
+                ViewBag.Error = "Error";
+                return View("Details",new QuestionnaireViewModel() { Questionnaire = questionnaire });
             }
-            catch
-            {
-                return View();
-            }
+            return NotFound();
         }
 
         // GET: QuestionnaireController/Delete/5
@@ -95,10 +106,19 @@ namespace Web.Controllers
         public ActionResult Add(QuestionnaireViewModel model)
         {
             var questionnaire = _questionnaireService.GetWithQuestions(model.Question.QuestionnaireId);
-            if(questionnaire != null)
+            if(questionnaire != null )
             {
                 model.Question.QuestionnaireId = questionnaire.Id;
+                if (!ModelState.IsValid && !(questionnaire.Status == Entity.Concrete.Enums.QuestionnaireStatus.CREATED || questionnaire.Status == Entity.Concrete.Enums.QuestionnaireStatus.DRAFT))
+                {
+                    return View("Details", new QuestionnaireViewModel() { Questionnaire = questionnaire });
+                }
                 var res = _questionService.Add(model.Question);
+                if(questionnaire.Status == Entity.Concrete.Enums.QuestionnaireStatus.CREATED)
+                {
+                    questionnaire.Status = Entity.Concrete.Enums.QuestionnaireStatus.DRAFT;
+                    _questionnaireService.Update(questionnaire);
+                }
                 if (res == null)
                     ViewBag.Error = "Error";
                 else

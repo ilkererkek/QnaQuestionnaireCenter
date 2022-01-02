@@ -49,7 +49,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("MultiAnswers");
+                    b.ToTable("MultiAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.MultiSelection", b =>
@@ -76,7 +76,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("TakenQuestionnaireId");
 
-                    b.ToTable("MultiSelections");
+                    b.ToTable("MultiSelections", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.NumericalAnswer", b =>
@@ -109,7 +109,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("NumericalAnswers");
+                    b.ToTable("NumericalAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.NumericalSelection", b =>
@@ -139,7 +139,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("TakenQuestionnaireId");
 
-                    b.ToTable("NumericalSelections");
+                    b.ToTable("NumericalSelections", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.OpenAnswer", b =>
@@ -173,7 +173,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("OpenAnswers");
+                    b.ToTable("OpenAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.OptionAnswer", b =>
@@ -206,7 +206,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("OptionAnswers");
+                    b.ToTable("OptionAnswers", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.OptionSelection", b =>
@@ -233,7 +233,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("TakenQuestionnaireId");
 
-                    b.ToTable("OptionSelections");
+                    b.ToTable("OptionSelections", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.Question", b =>
@@ -265,7 +265,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("QuestionnaireId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.Questionnaire", b =>
@@ -295,7 +295,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Questionnaires");
+                    b.ToTable("Questionnaires", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.TakenQuestionnaire", b =>
@@ -323,7 +323,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("QuestionnaireId");
 
-                    b.ToTable("TakenQuestionnaires");
+                    b.ToTable("TakenQuestionnaires", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.User", b =>
@@ -371,7 +371,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("QuestionnaireUser", b =>
@@ -386,7 +386,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("QuestionnaireUser");
+                    b.ToTable("QuestionnaireUser", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Concrete.MultiAnswer", b =>

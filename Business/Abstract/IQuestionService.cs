@@ -11,8 +11,9 @@ namespace Business.Abstract
     {
         Question Add(Question question);
         Question Update(Question question);
-        Question Delete(Guid id);
+        bool Delete(Guid id);
         List<Question> GetAll();
+        List<Question> GetAllByQuestionnaireId(Guid Id);
         Question GetById(Guid id);
     }
 }

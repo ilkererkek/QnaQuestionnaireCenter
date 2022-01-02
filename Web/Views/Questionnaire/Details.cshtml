@@ -1,4 +1,5 @@
-﻿@using Entity.Concrete.Enums
+﻿@using Entity.Concrete
+@using Entity.Concrete.Enums
 @model QuestionnaireViewModel
 @{
     ViewData["Title"] = "Details";
@@ -15,7 +16,8 @@
             <div class="card-header">
                 <h1>
                      @Model.Questionnaire.Name
-                     </h1>
+                </h1>
+                <span class="badge text-primary">@Model.Questionnaire.Status</span>
             </div>
             <div class="card-body">
                 <div class= "pt-2">
@@ -33,7 +35,9 @@
             
         </div>
     </div>
-     <div class="col-5">
+    @if(Model.Questionnaire.Status == QuestionnaireStatus.CREATED || Model.Questionnaire.Status == QuestionnaireStatus.DRAFT)
+    {
+        <div class="col-5">
         <div class="card border-dark">
             <div class="card-header">
                 <h4>Add Question</h4>
@@ -50,10 +54,12 @@
                     <div class="form-group mt-2">
                          <label >Type:</label><br />
                          @foreach (var item in System.Enum.GetValues(typeof(QuestionType)))
-                          {
-                             <input asp-for="Question.Type" type="radio" class="btn-check" name="options-outlined" id="@System.Enum.GetName(typeof(QuestionType),(int)item)" autocomplete="off" value = "@((int)item)" >
-                             <label class="btn btn-outline-primary" for="@System.Enum.GetName(typeof(QuestionType),(int)item)"> @System.Enum.GetName(typeof(QuestionType),(int)item)</label>
-                         }
+                         { 
+                                <div>
+                                    @Html.RadioButtonFor(m => Model.Question.Type, (int)item,null)
+                                    @Html.Label(item.ToString())
+                                </div>
+                          }
                          <span asp-validation-for="Question.Type" class="text-danger"></span>
                     </div>
                     <input type="hidden" asp-for="Question.QuestionnaireId" value = "@Model.Questionnaire.Id" />
@@ -65,9 +71,10 @@
             </div>
          </div>
     </div>
-    </div >
+    }
+</div >
     <div class = "row pt-3">
-        <div class= "col">
+        <div class= "col-7">
         
         @{
             if(Model.Questionnaire.Questions == null || Model.Questionnaire.Questions.Count == 0)
@@ -79,7 +86,63 @@
                 @foreach(var item in Model.Questionnaire.Questions)
                 {
                                         
-                    <h1>@item.Text</h1>
+                    if(item.Type == QuestionType.OPENENDED)
+                    {
+                        <div class="card text-dark border-dark mb-3" >
+                        <div class="card-body">
+                           <h5>@item.Text</h5>
+                           <textarea readonly rows=5 style="width:75%;"></textarea>
+                          </div>
+                        </div>
+                    }
+                    else if(item.Type == QuestionType.MULTISELECTION)
+                    {
+                        <div class="card text-dark border-dark mb-3" >
+                        <div class="card-body">
+                           <h5>@item.Text</h5>
+                                <div class="py-3">
+                                @if(item.MultiAnswers != null)
+                                {
+                                    foreach(var answer in item.MultiAnswers)
+                                    {
+                                        var a = answer as MultiAnswer;
+                                        <div>
+                                            <input type="checkbox" disabled />
+                                            <label>@a.Title</label>
+                                        </div>
+                                    }
+                                }
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-primary" asp-action="AddMultiAnswer" asp-controller="Question" asp-route-id = "@item.Id" asp-route-parent = "@item.QuestionnaireId">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if(item.Type == QuestionType.SELECTION)
+                    {
+                        <div class="card text-dark border-dark mb-3" >
+                        <div class="card-body">
+                           <h5>@item.Text</h5>
+                                <div class="py-3">
+                                @if(item.OptionAnswers != null)
+                                {
+                                    foreach(var answer in item.OptionAnswers)
+                                    {
+                                        var a = answer as OptionAnswer;
+                                        <div>
+                                            <input type="radio" disabled/>
+                                            <label>@a.Title</label>
+                                        </div>
+                                    }
+                                }
+                                </div>
+                                <div>
+                                    <a class="btn btn-outline-primary" asp-action="AddOptionAnswer" asp-controller="Question" asp-route-id = "@item.Id" asp-route-parent = "@item.QuestionnaireId">Add</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 }
             }
         }

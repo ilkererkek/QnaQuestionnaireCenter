@@ -1,4 +1,5 @@
 ﻿using Entity.Concrete;
+using System.ComponentModel;
 
 namespace Web.Models
 {
@@ -6,6 +7,8 @@ namespace Web.Models
     {
         public string Name { get; set; }
         public string? Description { get; set; }
+
+        [DisplayName("Private")]
         public bool IsHidden { get; set; }
 
         public Questionnaire ToQuestionnaire()

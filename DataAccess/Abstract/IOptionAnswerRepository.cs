@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface INumericalAnswerRepository : IDapperRepository<NumericalAnswer>
+    public interface IOptionAnswerRepository : IDapperRepository<OptionAnswer>
     {
+        List<OptionAnswer> GetByQuestionId(Guid id);
     }
 }

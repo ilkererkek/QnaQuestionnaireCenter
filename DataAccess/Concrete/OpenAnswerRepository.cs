@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete
 {
-    public class MultiAnswerRepository : IMultiAnswerRepository
+    public class OpenAnswerRepository : IOpenAnswerRepository
     {
         private readonly IConfig _config;
-        public MultiAnswerRepository(IConfig config)
+        public OpenAnswerRepository(IConfig config)
         {
             _config = config;
         }
-        public MultiAnswer Add(MultiAnswer entity)
+        public OpenAnswer Add(OpenAnswer entity)
         {
-            var rawSql = "INSERT INTO MultiAnswers (Id, Title, Text, QuestionId, CreatedAt, UpdatedAt)" +
-                "VALUES (@Id,@Title,@Text,@QuestionId,@CreatedAt,@UpdatedAt)";
+            var rawSql = "INSERT INTO OpenAnswers (Id, Answer, CreatedAt, UpdatedAt, Title, Text, QuestionId)" +
+                "VALUES (@Id, @Answer, @CreatedAt, @UpdatedAt, @Title, @Text, @QuestionId)";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
                 var affectedRows = connection.Execute(rawSql, entity);
@@ -33,51 +33,51 @@ namespace DataAccess.Concrete
 
         public void Delete(Guid id)
         {
-            var rawSql = "DELETE FROM MultiAnswers WHERE MultiAnswers.Id = @Id";
+            var rawSql = "DELETE FROM OpenAnswers WHERE OpenAnswers.Id = @Id";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
-                var affectedRows = connection.Execute(rawSql, new {Id= id});
+                var affectedRows = connection.Execute(rawSql, new { Id = id });
             }
         }
 
-        public MultiAnswer Get(object parameters, string rawSql)
+        public OpenAnswer Get(object parameters, string rawSql)
         {
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
-                return connection.QueryFirstOrDefault<MultiAnswer>(rawSql, parameters);
+                return connection.QueryFirstOrDefault<OpenAnswer>(rawSql, parameters);
             }
         }
 
-        public MultiAnswer GetById(Guid id)
+        public OpenAnswer GetById(Guid id)
         {
-            var rawSql = "SELECT * FROM MultiAnswers WHERE MultiAnswers.Id = @Id";
+            var rawSql = "SELECT * FROM OpenAnswers WHERE OpenAnswers.Id = @Id";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
-                return connection.QueryFirstOrDefault<MultiAnswer>(rawSql, new {Id=id});
+                return connection.QueryFirstOrDefault<OpenAnswer>(rawSql, new { Id = id });
             }
         }
 
-        public List<MultiAnswer> GetByQuestionId(Guid id)
+        public List<OpenAnswer> GetByQuestionId(Guid id)
         {
-            var rawSql = "SELECT * FROM MultiAnswers WHERE MultiAnswers.QuestionId = @Id";
+            var rawSql = "SELECT * FROM OpenAnswers WHERE OpenAnswers.QuestionId = @Id";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
-                return connection.Query<MultiAnswer>(rawSql, new { Id = id }).ToList();
+                return connection.Query<OpenAnswer>(rawSql, new { Id = id }).ToList();
             }
         }
 
-        public List<MultiAnswer> GetList(object parameters, string rawSql)
+        public List<OpenAnswer> GetList(object parameters, string rawSql)
         {
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
-                return connection.Query<MultiAnswer>(rawSql, parameters).ToList();
+                return connection.Query<OpenAnswer>(rawSql, parameters).ToList();
             }
         }
 
-        public MultiAnswer Update(MultiAnswer entity)
+        public OpenAnswer Update(OpenAnswer entity)
         {
-            var rawSql = "UPDATE MultiAnswers " +
-                "SET Title = @Title, Text = @Text, QuestionId = @QuestionId, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt " +
+            var rawSql = "UPDATE OpenAnswers " +
+                "SET Answer = @Answer, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt, Title = @Title, Text = @Title, QuestionId = @QuestionId " +
                 "WHERE Id = @Id";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {

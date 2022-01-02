@@ -15,7 +15,6 @@ namespace Entity.Concrete
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
         public virtual Questionnaire Questionnaire { get; set; }
-        public virtual List<NumericalSelection> NumericalSelections { get; set; }
         public virtual List<MultiSelection> MultiSelections { get; set; }
         public virtual List<OptionSelection> OptionSelections { get; set; }
     }

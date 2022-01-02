@@ -6,21 +6,23 @@
             <div class="card-header">
                <label asp-for="Name" class="control-label"></label>
                 <input  asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <span asp-validation-for="Name" class="text-danger" value="@Model.Name"></span>
             </div>
-            <div class="card-body">
+            <div class="card-body ">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" value="" class="form-control" rows=5></textarea>
+                <textarea asp-for="Description" value="" class="form-control" rows=5 value="@Model.Description"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group pt-2">
                 <label asp-for="IsHidden" class="control-label"></label>
-                <input type="checkbox" asp-for="IsHidden" class="form-check-input" />
+                <input type="checkbox" asp-for="IsHidden" class="form-check-input" value="@Model.IsHidden" />
                 <span asp-validation-for="IsHidden" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <input type="hidden" asp-for ="Id" value="@Model.Id"/>
+            <div class="form-group pt-2">
+                <a class="btn btn-outline-danger" asp-action="Details" asp-controller="Questionnaire" asp-route-id="@Model.Id">Cancel</a>
                 <input type="submit" value="Edit" class="btn btn-primary" />
             </div>
             </div>  

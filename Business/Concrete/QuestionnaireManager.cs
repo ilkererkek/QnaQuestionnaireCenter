@@ -12,10 +12,12 @@ namespace Business.Concrete
     public class QuestionnaireManager : IQuestionnaireService
     {
         private readonly IQuestionnaireRepository _questionnaireRepository;
+        private readonly IAnswerService _answerService;
 
-        public QuestionnaireManager(IQuestionnaireRepository questionnaireRepository)
+        public QuestionnaireManager(IQuestionnaireRepository questionnaireRepository, IAnswerService answerService)
         {
             _questionnaireRepository = questionnaireRepository;
+            _answerService = answerService;
         }
         public Questionnaire Add(Questionnaire questionnaire, Guid UserId)
         {
@@ -64,24 +66,28 @@ namespace Business.Concrete
             {
                 switch (item.Type)
                 {
-                    case Entity.Concrete.Enums.QuestionType.NUMERICAL:
-                        break;
+                   
                     case Entity.Concrete.Enums.QuestionType.SELECTION:
+                        item.OptionAnswers = _answerService.GetOptionByQuestionId(item.Id);
                         break;
                     case Entity.Concrete.Enums.QuestionType.MULTISELECTION:
-                        break;
-                    case Entity.Concrete.Enums.QuestionType.OPENENDED:
-                        break;
-                    default:
+                        item.MultiAnswers = _answerService.GetMultiByQuestionId(item.Id);
                         break;
                 }
             }
             return questionnaire;
         }
 
-        public Questionnaire Update(Guid id)
+        public Questionnaire Update(Questionnaire questionnaire)
         {
-            throw new NotImplementedException();
+            var oldQustionnaire = GetById(questionnaire.Id);
+            if(oldQustionnaire != null)
+            {
+                questionnaire.CreatedAt = oldQustionnaire.CreatedAt;
+                _questionnaireRepository.Update(questionnaire);
+                return questionnaire;
+            }
+            return null;
         }
     }
 }

@@ -27,14 +27,25 @@ namespace Business.Concrete
             return null;
         }
 
-        public Question Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var question = GetById(id);
+            if(question != null)
+            {
+                _questionRepository.Delete(id);
+                return true;
+            }
+            return false;
         }
 
         public List<Question> GetAll()
         {
-            throw new NotImplementedException();
+            return _questionRepository.GetList(null,"SELECT * FROM Questions;");
+        }
+
+        public List<Question> GetAllByQuestionnaireId(Guid Id)
+        {
+            return _questionRepository.GetList(new { Id = Id}, "SELECT * FROM Questions WHERE Questions.QuestionnaireId = @Id;");
         }
 
         public Question GetById(Guid id)
@@ -44,7 +55,14 @@ namespace Business.Concrete
 
         public Question Update(Question question)
         {
-            throw new NotImplementedException();
+            var oldQuestion = GetById(question.Id);
+            if (oldQuestion != null)
+            {
+                question.CreatedAt = oldQuestion.CreatedAt;
+                _questionRepository.Update(question);
+                return question;
+            }
+            return null;
         }
     }
 }

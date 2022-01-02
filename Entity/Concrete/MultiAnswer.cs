@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace Entity.Concrete
 {
-    public class MultiAnswer : BaseEntity
+    public class MultiAnswer : BaseAnswer
     {
-        public string Title { get; set; }
-        public string Text { get; set; }
-        public Guid QuestionId { get; set; }
-        public virtual Question Question { get; set; }
-        public virtual List<MultiSelection> MultiSelections { get; set; }
+        
+        public virtual List<MultiSelection>? MultiSelections { get; set; }
     }
 }

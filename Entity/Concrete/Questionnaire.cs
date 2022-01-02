@@ -19,7 +19,7 @@ namespace Entity.Concrete
         public string? Description { get; set; }
         public bool IsHidden { get; set; }
         public QuestionnaireStatus Status { get; set; }
-        public virtual List<User> Users { get; set; }
-        public virtual List<Question> Questions { get; set; }
+        public virtual List<User>? Users { get; set; }
+        public virtual List<Question>? Questions { get; set; }
     }
 }

@@ -9,9 +9,13 @@ namespace Entity.Concrete
 {
     public class BaseAnswer : BaseEntity
     {
+        public BaseAnswer() : base()
+        {
+            Text = "";
+        }
         public string Title { get; set; }
-        public string Text { get; set; }
+        public string? Text { get; set; }
         public Guid QuestionId { get; set; }
-        public virtual Question Question { get; set; }
+        public virtual Question? Question { get; set; }
     }
 }

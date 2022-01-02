@@ -26,7 +26,13 @@ namespace Business.DependencyInjection.Autofac
             builder.RegisterType<QuestionnaireManager>().As<IQuestionnaireService>();
 
             builder.RegisterType<QuestionRepository>().As<IQuestionRepository>();
-            builder.RegisterType<QuestionManager>().As<IQuestionService>();
+            builder.RegisterType<QuestionManager>().As<IQuestionService>(); 
+            
+            builder.RegisterType<MultiAnswerRepository>().As<IMultiAnswerRepository>();
+            builder.RegisterType<OptionAnswerRepository>().As<IOptionAnswerRepository>();
+            builder.RegisterType<OpenAnswerRepository>().As<IOpenAnswerRepository>();
+            
+            builder.RegisterType<AnswerManager>().As<IAnswerService>();
 
         }
     }

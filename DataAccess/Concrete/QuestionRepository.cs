@@ -33,12 +33,22 @@ namespace DataAccess.Concrete
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var rawSql = "DELETE FROM Questions WHERE Questions.Id = @Id";
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                var affectedRows = connection.Execute(rawSql, new { Id = id});
+                
+            }
         }
 
         public Question Get(object parameters, string rawSql)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                var question = connection.Query<Question>(rawSql, parameters).FirstOrDefault();
+
+                return question;
+            }
         }
 
         public Question GetById(Guid id)
@@ -54,12 +64,26 @@ namespace DataAccess.Concrete
 
         public List<Question> GetList(object parameters, string rawSql)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                var questions = connection.Query<Question>(rawSql, parameters).ToList();
+
+                return questions;
+            }
         }
 
         public Question Update(Question entity)
         {
-            throw new NotImplementedException();
+            var rawSql = "UPDATE Questions SET " +
+                "Text = @Text OrderNo = @OrderNo Type = @Type QuestionnaireId = @QuestionnaireId CreatedAt = @CreatedAt UpdatedAt = @UpdatedAt " +
+                "WHERE Id = @Id";
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                var affectedRows = connection.Execute(rawSql, entity);
+                if (affectedRows == 0)
+                    return null;
+                return entity;
+            }
         }
     }
 }

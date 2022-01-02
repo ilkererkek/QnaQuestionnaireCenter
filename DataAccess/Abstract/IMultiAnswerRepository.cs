@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface IMultiAnswerRepository : IDapperRepository<MultiAnswer>
     {
+        List<MultiAnswer> GetByQuestionId(Guid id);
     }
 }
