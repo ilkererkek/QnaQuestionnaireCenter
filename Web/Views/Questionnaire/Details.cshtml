@@ -15,17 +15,9 @@
             <div class="card text-dark  mb-3" >
             <div class="card-header">Header</div>
             <div class="card-body">
-                 @{
-                    if(Model.Questionnaire.Questions != null && Model.Questionnaire.Questions.Count != 0)
-                    {
-            
-                    }
-                    else
-                    {
-                       <p> There is no questions in this Questionnaire yet!</p> 
-                    }
-                }
-                </div>
+                   @Model.Questionnaire.Name
+            </div>
+            <a class="btn btn-outline-primary text-lg" asp-action="Delete" asp-route-id="@Model.Questionnaire.Id">Details</a>
         </div>
     </div>
      <div class="col-5">
