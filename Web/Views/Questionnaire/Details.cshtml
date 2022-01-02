@@ -1,0 +1,45 @@
+﻿@using Entity.Concrete.Enums
+@model QuestionnaireViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<h1>@Model.Questionnaire.Name</h1>
+
+
+<div class="row">
+    <div class = "col-7">
+            <div class="card text-dark  mb-3" >
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                 @{
+                    if(Model.Questionnaire.Questions != null && Model.Questionnaire.Questions.Count != 0)
+                    {
+            
+                    }
+                    else
+                    {
+                       <p> There is no questions in this Questionnaire yet!</p> 
+                    }
+                }
+                </div>
+        </div>
+    </div>
+     <div class="col-5">
+        <div class="card border-dark">
+            <div class="card-header">
+                <h4>Add Question</h4>
+            </div>
+            <div class="card-body">
+
+               <div id="create-question-form"></div>
+            </div>
+         </div>
+    </div>
+    </div >
+
+    
+

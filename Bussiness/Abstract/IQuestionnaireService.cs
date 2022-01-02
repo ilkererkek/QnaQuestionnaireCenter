@@ -9,13 +9,14 @@ namespace Bussiness.Abstract
 {
     public interface IQuestionnaireService
     {
-        Questionnaire Add(Questionnaire questionnaire);
+        Questionnaire Add(Questionnaire questionnaire, Guid UserId);
 
         bool Delete(Guid id);
         Questionnaire Update(Guid id);
         Questionnaire GetById(Guid Id);
         List<Questionnaire> GetAll();
-        Questionnaire GetWithQuestions();
+        List<Questionnaire> GetAllByUserId(Guid UserId);
+        Questionnaire GetWithQuestions(Guid Id);
 
     }
 }

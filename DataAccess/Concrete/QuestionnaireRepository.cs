@@ -18,22 +18,32 @@ namespace DataAccess.Concrete
         {
             _config = config;
         }
-        public Questionnaire Add(Questionnaire entity)
+        public Questionnaire Add(Questionnaire entity, Guid UserId)
         {
             var rawSql = "INSERT INTO Questionnaires (Id, Name, Description, IsHidden, Status, CreatedAt, UpdatedAt) " +
                 "VALUES (@Id, @Name, @Description, @IsHidden, @Status, @CreatedAt, @UpdatedAt)";
+
+            var rawSql2 = "INSERT INTO QuestionnaireUser (QuestionnairesId, UsersId) VALUES (@Id,@UserId)";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
                 var affectedRows = connection.Execute(rawSql, entity);
+                if (affectedRows == 0)
+                    return null;
+                affectedRows = connection.Execute(rawSql2, new {Id = entity.Id, UserId = UserId});
                 if (affectedRows == 0)
                     return null;
                 return entity;
             }
         }
 
+        public Questionnaire Add(Questionnaire entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(Guid id)
         {
-            var rawSql = "DELETE FROM Questionnaires WHERE UsersQuestionnairesId = @Id";
+            var rawSql = "DELETE FROM Questionnaires WHERE Questionnaires.Id = @Id";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
                 var affectedRows = connection.Execute(rawSql, new { Id = id });
@@ -53,11 +63,35 @@ namespace DataAccess.Concrete
 
         public Questionnaire GetById(Guid id)
         {
-            var rawSql = "SELECT * FROM Questionnaire WHERE Questionnaire.Id = @Id";
+            var rawSql = "SELECT * FROM Questionnaires WHERE Questionnaires.Id = @Id";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
                 var questionnaire = connection.QueryFirstOrDefault<Questionnaire>(rawSql, new { Id = id });
                 return questionnaire;
+            }
+        }
+
+        public Questionnaire GetWithQuestions(object parameters, string rawSql)
+        {
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+               var QuestionnaireDictionary = new Dictionary<Guid, Questionnaire>();
+                var result = connection.Query<Questionnaire, Question, Questionnaire>(rawSql,
+                    (questionnaire, question) =>
+                    {
+                        Questionnaire questionnaireEntry;
+                        if (!QuestionnaireDictionary.TryGetValue(questionnaire.Id, out questionnaireEntry))
+                        {
+                            questionnaireEntry = questionnaire;
+                            questionnaireEntry.Questions = new List<Question>();
+                            QuestionnaireDictionary.Add(questionnaireEntry.Id, questionnaireEntry);
+                        }
+                        if (question != null)
+                            questionnaireEntry.Questions.Add(question);
+                        return questionnaireEntry;
+                    }
+                    , parameters).Distinct().ToList().FirstOrDefault();
+                return result;
             }
         }
 

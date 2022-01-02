@@ -10,5 +10,7 @@ namespace DataAccess.Abstract
 {
     public interface IQuestionnaireRepository : IDapperRepository<Questionnaire>
     {
+        Questionnaire Add(Questionnaire questionnaire, Guid UserId);
+        Questionnaire GetWithQuestions(object parameters, string rawSql);
     }
 }

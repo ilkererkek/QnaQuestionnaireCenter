@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -19,13 +20,16 @@ namespace Web.Controllers
         // GET: QuestionnaireController
         public ActionResult Index()
         {
-            return View();
+            var id = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
+            var list = _questionnaireService.GetAllByUserId(id);
+            return View(list);
         }
 
         // GET: QuestionnaireController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Guid id)
         {
-            return View();
+            var questionnaire = _questionnaireService.GetWithQuestions(id);
+            return View(new QuestionnaireViewModel() { Questionnaire = questionnaire});
         }
 
         // GET: QuestionnaireController/Create
@@ -42,10 +46,11 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = _questionnaireService.Add(model.ToQuestionnaire());
+                var id = Guid.Parse(HttpContext.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value);
+                var res = _questionnaireService.Add(model.ToQuestionnaire(),id);
                 if(res != null)
                 {
-                    return Redirect("/");
+                    return Redirect("Index");
                 }
             }
             return View(model);
@@ -73,24 +78,15 @@ namespace Web.Controllers
         }
 
         // GET: QuestionnaireController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            var res = _questionnaireService.Delete(id);
+            if (res)
+                return Redirect("/Questionnaire/Index");
+            return NotFound();
         }
 
-        // POST: QuestionnaireController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+     
+       
     }
 }

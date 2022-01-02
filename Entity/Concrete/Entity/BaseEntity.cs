@@ -12,8 +12,8 @@ namespace Entity.Concrete.Entity
         public BaseEntity()
         {
             Id = Guid.NewGuid();
-            CreatedAt = DateTime.UtcNow.AddDays(3);
-            UpdatedAt = DateTime.UtcNow.AddDays(3);
+            CreatedAt = DateTime.UtcNow.AddHours(3);
+            UpdatedAt = DateTime.UtcNow.AddHours(3);
         }
 
         public Guid Id { get; set; }

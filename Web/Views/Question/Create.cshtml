@@ -1,0 +1,23 @@
+﻿@using Entity.Concrete.Enums
+@model Entity.Concrete.Question
+
+ <form asp-controller="Question" asp-action="Create" >
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Text" class="control-label"></label>
+                        <textarea asp-for="Text" class="form-control" rows=5></textarea>
+                        <span asp-validation-for="Text" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mt-2">
+                         <label >Type:</label><br />
+                         @foreach (var item in System.Enum.GetValues(typeof(QuestionType)))
+                          {
+                             <input asp-for="Type" type="radio" class="btn-check" name="options-outlined" id="@System.Enum.GetName(typeof(QuestionType),(int)item)" autocomplete="off" value = "@((int)item)" >
+                             <label class="btn btn-outline-primary" for="@System.Enum.GetName(typeof(QuestionType),(int)item)"> @System.Enum.GetName(typeof(QuestionType),(int)item)</label>
+                         }
+                         <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+    <input type="hidden" asp-for="QuestionnaireId" value = "@ViewBag.QuestionnaireId" />
+</form>
+
+

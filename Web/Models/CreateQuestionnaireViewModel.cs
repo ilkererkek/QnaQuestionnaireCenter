@@ -14,7 +14,8 @@ namespace Web.Models
             {
                 Name = Name,
                 Description = Description,
-                IsHidden = IsHidden
+                IsHidden = IsHidden,
+                Status = Entity.Concrete.Enums.QuestionnaireStatus.CREATED
             };
         }
     }

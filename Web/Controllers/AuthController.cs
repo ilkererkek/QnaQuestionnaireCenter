@@ -6,6 +6,7 @@ using System.Web;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Principal;
 
 namespace Web.Controllers
 {
@@ -34,7 +35,7 @@ namespace Web.Controllers
                 {
                     var claims = new List<Claim>();
                     claims.Add(new Claim(type: ClaimTypes.Sid, value: user.Id.ToString()));
-                    claims.Add(new Claim(type: ClaimTypes.Name, value: user.Name));
+                    claims.Add(new Claim(type: ClaimTypes.Name, value: user.Name +" "+ user.Surname));
                     claims.Add(new Claim(type: ClaimTypes.MobilePhone, value: user.PhoneNumber));
                     claims.Add(new Claim(type: ClaimTypes.Email, value: user.Email));
                     var userIdentity = new ClaimsIdentity(claims, "login");
@@ -74,6 +75,9 @@ namespace Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.User =
+                new GenericPrincipal(new GenericIdentity(string.Empty), null);
+
             var model = new LoginViewModel();
             return View("Login",model);
         }
