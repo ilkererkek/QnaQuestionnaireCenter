@@ -5,19 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
-<h1>@Model.Questionnaire.Name</h1>
 
 
-<div class="row">
-    <div class = "col-7">
-            <div class="card text-dark  mb-3" >
-            <div class="card-header">Header</div>
-            <div class="card-body">
-                   @Model.Questionnaire.Name
+
+
+<div class="row pt-5">
+    <div id="details" class="col-7">
+            <div class="card text-dark border-dark mb-3" >
+            <div class="card-header">
+                <h1>
+                     @Model.Questionnaire.Name
+                     </h1>
             </div>
-            <a class="btn btn-outline-primary text-lg" asp-action="Delete" asp-route-id="@Model.Questionnaire.Id">Details</a>
+            <div class="card-body">
+                <div class= "pt-2">
+                    @Model.Questionnaire.Description
+                </div>
+                   <div class="text-end pt-4">
+                    <button type="button" id="edit" data-id="@Model.Questionnaire.Id" class="btn btn-outline-primary" >
+                      Edit
+                    </button>
+                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                      Delete
+                    </button>
+              </div>
+            </div>
+            
         </div>
     </div>
      <div class="col-5">
@@ -53,6 +66,42 @@
          </div>
     </div>
     </div >
+    <div class = "row pt-3">
+        <div class= "col">
+        
+        @{
+            if(Model.Questionnaire.Questions == null || Model.Questionnaire.Questions.Count == 0)
+            {
+                <p>There is no question yet!</p>
+            }
+            else
+            {
+                @foreach(var item in Model.Questionnaire.Questions)
+                {
+                                        
+                    <h1>@item.Text</h1>
+                }
+            }
+        }
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a asp-action="Delete" asp-route-id="@Model.Questionnaire.Id" type="button" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     
 

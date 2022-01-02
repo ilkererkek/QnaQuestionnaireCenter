@@ -1,5 +1,5 @@
-﻿using Bussiness.Abstract;
-using Bussiness.Security;
+﻿using Business.Abstract;
+using Business.Security;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bussiness.Concrete
+namespace Business.Concrete
 {
     public class UserManager : IUserService
     {

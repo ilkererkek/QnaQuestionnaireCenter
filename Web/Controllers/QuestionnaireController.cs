@@ -1,8 +1,9 @@
-﻿using Bussiness.Abstract;
+﻿using Business.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Web.Models;
 using System.Security.Claims;
+using Entity.Concrete;
 
 namespace Web.Controllers
 {
@@ -10,10 +11,12 @@ namespace Web.Controllers
     {
 
         private readonly IQuestionnaireService _questionnaireService;
+        private readonly IQuestionService _questionService;
 
-        public QuestionnaireController(IQuestionnaireService questionnaireService)
+        public QuestionnaireController(IQuestionnaireService questionnaireService, IQuestionService questionService)
         {
             _questionnaireService = questionnaireService;
+            _questionService = questionService;
         }
 
 
@@ -53,13 +56,14 @@ namespace Web.Controllers
                     return Redirect("Index");
                 }
             }
+            ViewBag.Error = "Error";
             return View(model);
         }
 
         // GET: QuestionnaireController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+            return PartialView(new Questionnaire());
         }
 
         // POST: QuestionnaireController/Edit/5
@@ -91,7 +95,21 @@ namespace Web.Controllers
         public ActionResult Add(QuestionnaireViewModel model)
         {
             var questionnaire = _questionnaireService.GetWithQuestions(model.Question.QuestionnaireId);
-            return View("Details",new QuestionnaireViewModel() { Questionnaire = questionnaire });
+            if(questionnaire != null)
+            {
+                model.Question.QuestionnaireId = questionnaire.Id;
+                var res = _questionService.Add(model.Question);
+                if (res == null)
+                    ViewBag.Error = "Error";
+                else
+                {
+                    questionnaire.Questions.Add(res);
+                }
+                return View("Details", new QuestionnaireViewModel() { Questionnaire = questionnaire });
+
+            }
+            return NotFound();
+
         }
 
 

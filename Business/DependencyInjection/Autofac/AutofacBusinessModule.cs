@@ -1,17 +1,19 @@
 ﻿using Autofac;
-using Bussiness.Abstract;
-using Bussiness.Concrete;
+using Business.Abstract;
+using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Module = Autofac.Module;
 
-namespace Bussiness.DependencyInjection.Autofac
+namespace Business.DependencyInjection.Autofac
 {
-    public class AutofacBussinessModule : Module
+    public class AutofacBusinessModule : Module
     {
 
         protected override void Load(ContainerBuilder builder)
@@ -22,6 +24,9 @@ namespace Bussiness.DependencyInjection.Autofac
 
             builder.RegisterType<QuestionnaireRepository>().As<IQuestionnaireRepository>();
             builder.RegisterType<QuestionnaireManager>().As<IQuestionnaireService>();
+
+            builder.RegisterType<QuestionRepository>().As<IQuestionRepository>();
+            builder.RegisterType<QuestionManager>().As<IQuestionService>();
 
         }
     }

@@ -1,4 +1,4 @@
-﻿using Bussiness.Abstract;
+﻿using Business.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Web.Models;
@@ -64,6 +64,7 @@ namespace Web.Controllers
                 {
                     var m = new LoginViewModel();
                     m.Email = model.Email;
+                    m.Password = "";
                     return View("Login", m);
                 }
             }

@@ -24,3 +24,20 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+$(document).on("click", "#edit", function (event) {
+    var btn = $("#edit");
+    var id = btn.attr("data-id")
+    $.ajax({
+        url: '/Questionnaire/Edit/'+id,
+        type: 'GET',
+        dataType: 'html',
+        success: function (data) {
+            $("#details").html(data);
+        },
+        error: function () {
+            alert("Error.");
+        }
+    });
+});
+

@@ -1,4 +1,4 @@
-﻿using Bussiness.Abstract;
+﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entity.Concrete;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bussiness.Concrete
+namespace Business.Concrete
 {
     public class QuestionnaireManager : IQuestionnaireService
     {
@@ -19,7 +19,12 @@ namespace Bussiness.Concrete
         }
         public Questionnaire Add(Questionnaire questionnaire, Guid UserId)
         {
-            return _questionnaireRepository.Add(questionnaire, UserId);
+            var oldQuestionnaire = GetById(questionnaire.Id);
+            if(oldQuestionnaire == null)
+            {
+                return _questionnaireRepository.Add(questionnaire, UserId);
+            }
+            return null;
         }
 
         public bool Delete(Guid id)
@@ -55,6 +60,22 @@ namespace Bussiness.Concrete
             var questionnaire =  _questionnaireRepository.GetWithQuestions(new { Id = Id }, "SELECT * FROM Questionnaires " +
                 "LEFT JOIN Questions ON Questions.QuestionnaireId = Questionnaires.Id " +
                 "WHERE Questionnaires.Id = @Id");
+            foreach (var item in questionnaire.Questions)
+            {
+                switch (item.Type)
+                {
+                    case Entity.Concrete.Enums.QuestionType.NUMERICAL:
+                        break;
+                    case Entity.Concrete.Enums.QuestionType.SELECTION:
+                        break;
+                    case Entity.Concrete.Enums.QuestionType.MULTISELECTION:
+                        break;
+                    case Entity.Concrete.Enums.QuestionType.OPENENDED:
+                        break;
+                    default:
+                        break;
+                }
+            }
             return questionnaire;
         }
 

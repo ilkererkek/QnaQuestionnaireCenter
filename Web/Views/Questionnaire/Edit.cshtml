@@ -1,32 +1,28 @@
-﻿@model Web.Models.CreateQuestionnaireViewModel
-@{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h1>Create</h1>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+﻿
+@using Entity.Concrete
+@model Questionnaire
+<form asp-action="Edit">
+    <div class="card text-dark border-dark mb-3" >
+            <div class="card-header">
+               <label asp-for="Name" class="control-label"></label>
                 <input  asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-             <div class="form-group">
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
                 <textarea asp-for="Description" value="" class="form-control" rows=5></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="IsHidden" class="control-label"></label>
                 <input type="checkbox" asp-for="IsHidden" class="form-check-input" />
                 <span asp-validation-for="IsHidden" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Edit" class="btn btn-primary" />
             </div>
-        </form>
-    </div>
+            </div>  
 </div>
+</form>
