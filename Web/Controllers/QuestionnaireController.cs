@@ -86,7 +86,14 @@ namespace Web.Controllers
             return NotFound();
         }
 
-     
-       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Add(QuestionnaireViewModel model)
+        {
+            var questionnaire = _questionnaireService.GetWithQuestions(model.Question.QuestionnaireId);
+            return View("Details",new QuestionnaireViewModel() { Questionnaire = questionnaire });
+        }
+
+
     }
 }
