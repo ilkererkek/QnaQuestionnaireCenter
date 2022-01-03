@@ -13,6 +13,7 @@ namespace Business.Abstract
 
         bool Delete(Guid id);
         Questionnaire Update(Questionnaire questionnaire);
+        Questionnaire UpdateStatus(Questionnaire questionnaire);
         Questionnaire GetById(Guid Id);
         List<Questionnaire> GetAll();
         List<Questionnaire> GetAllByUserId(Guid UserId);

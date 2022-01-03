@@ -101,7 +101,7 @@ namespace Web.Controllers
                 {
                     questionnaire.Status = Entity.Concrete.Enums.QuestionnaireStatus.PUBLISHED;
                 }
-                _questionnaireService.Update(questionnaire);
+                _questionnaireService.UpdateStatus(questionnaire);
                 return View("Details", new QuestionnaireViewModel() { Questionnaire = questionnaire });
             }
             return NotFound();
@@ -132,7 +132,7 @@ namespace Web.Controllers
                 if(questionnaire.Status == Entity.Concrete.Enums.QuestionnaireStatus.CREATED)
                 {
                     questionnaire.Status = Entity.Concrete.Enums.QuestionnaireStatus.DRAFT;
-                    _questionnaireService.Update(questionnaire);
+                    _questionnaireService.UpdateStatus(questionnaire);
                 }
                 if (res == null)
                     ViewBag.Error = "Error";

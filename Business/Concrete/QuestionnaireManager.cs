@@ -89,6 +89,19 @@ namespace Business.Concrete
             if(oldQustionnaire != null)
             {
                 questionnaire.CreatedAt = oldQustionnaire.CreatedAt;
+                questionnaire.Status = oldQustionnaire.Status;
+                _questionnaireRepository.Update(questionnaire);
+                return questionnaire;
+            }
+            return null;
+        }
+
+        public Questionnaire UpdateStatus(Questionnaire questionnaire)
+        {
+            var oldQustionnaire = GetById(questionnaire.Id);
+            if (oldQustionnaire != null)
+            {
+                questionnaire.CreatedAt = oldQustionnaire.CreatedAt;
                 _questionnaireRepository.Update(questionnaire);
                 return questionnaire;
             }

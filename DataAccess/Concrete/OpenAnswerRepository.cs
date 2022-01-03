@@ -20,8 +20,8 @@ namespace DataAccess.Concrete
         }
         public OpenAnswer Add(OpenAnswer entity)
         {
-            var rawSql = "INSERT INTO OpenAnswers (Id, Answer, CreatedAt, UpdatedAt, Title, Text, QuestionId)" +
-                "VALUES (@Id, @Answer, @CreatedAt, @UpdatedAt, @Title, @Text, @QuestionId)";
+            var rawSql = "INSERT INTO OpenAnswers (Id, Answer, CreatedAt, UpdatedAt, Title, Text, QuestionId, TakenQuestionnaireId)" +
+                "VALUES (@Id, @Answer, @CreatedAt, @UpdatedAt, @Title, @Text, @QuestionId, @TakenQuestionnaireId)";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
                 var affectedRows = connection.Execute(rawSql, entity);
@@ -64,6 +64,11 @@ namespace DataAccess.Concrete
             {
                 return connection.Query<OpenAnswer>(rawSql, new { Id = id }).ToList();
             }
+        }
+
+        public List<OptionSelection> GetByTakenQuestionnaireId(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<OpenAnswer> GetList(object parameters, string rawSql)

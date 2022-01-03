@@ -1,0 +1,52 @@
+﻿@model QuestionViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1 class = "px-5 py-5">@Model.Name</h1>
+<form asp-action="Details">
+    <h4 class="px-5 py-3"> @Model.Question.Text</h4>
+    @{
+        if(Model.Type == Entity.Concrete.Enums.QuestionType.OPENENDED)
+        {
+             <div class="form-group px-5 py-3">
+                <input asp-for="OpenAnswer" class="form-control" />
+            </div>
+        }
+        else if(Model.Type == Entity.Concrete.Enums.QuestionType.MULTISELECTION)
+        {
+            <div>
+                @for(int i = 0; i < Model.Question.MultiAnswers.Count; i++)
+                {
+                   <div class = "px-5 py-3">
+                    @Html.CheckBoxFor(x => x.MultiSelection[i])
+                    @Html.LabelFor(x => x.MultiSelection[i],Model.Question.MultiAnswers[i].Title)
+                   </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div>
+                @for(int i = 0; i < Model.Question.OptionAnswers.Count; i++)
+                {
+                   <div class = "px-5 py-3">
+                    @Html.RadioButtonFor(x => x.Selection,Model.Question.OptionAnswers[i].Id)
+                    @Html.LabelFor(x => x.Selection,Model.Question.OptionAnswers[i].Title)
+                   </div>
+                }
+            </div>
+        }
+    }
+    <input asp-for="Index" value= "@Model.Index" type = "hidden"/>
+    <input asp-for="TakenQuestionnaireId" type = "hidden" value="@Model.TakenQuestionnaireId"/>
+    <input asp-for="QuestionId" type = "hidden" value="@Model.QuestionId"/>
+    <input asp-for="QuestionnaireId" type = "hidden" value="@Model.QuestionnaireId"/>
+    <input asp-for="Type" type = "hidden" value="@Model.Type"/>
+    <div class="form-group px-5 py-3">
+        <input type="submit" value="Send" class="btn btn-primary" />
+    </div>
+</form>
+
