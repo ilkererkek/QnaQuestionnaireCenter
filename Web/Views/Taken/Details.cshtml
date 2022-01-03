@@ -1,0 +1,18 @@
+﻿@using Entity.Concrete
+@model Questionnaire
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class = "p-5">
+    @foreach (var item in Model.Questions)
+    {
+        <h4>@item.Text</h4>
+        
+        if(item.Type == Entity.Concrete.Enums.QuestionType.OPENENDED)
+        {
+                <textarea readonly>@item.OpenAnswers[0].Answer</textarea>
+        }
+    }
+</div>

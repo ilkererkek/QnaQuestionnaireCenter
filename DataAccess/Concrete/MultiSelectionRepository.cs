@@ -39,7 +39,10 @@ namespace DataAccess.Concrete
 
         public MultiSelection Get(object parameters, string rawSql)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                return connection.QueryFirstOrDefault<MultiSelection>(rawSql, parameters);
+            }
         }
 
         public MultiSelection GetById(Guid id)
@@ -59,7 +62,10 @@ namespace DataAccess.Concrete
 
         public List<MultiSelection> GetList(object parameters, string rawSql)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                return connection.Query<MultiSelection>(rawSql, parameters).ToList();
+            }
         }
 
         public MultiSelection Update(MultiSelection entity)

@@ -1,0 +1,26 @@
+﻿@using Entity.Concrete
+@model List<TakenQuestionnaire>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach(var item in Model)
+{
+      <div class="row mt-3 mx-4">
+          <div class = "col-8">
+               <div class="card border-dark">
+                 <div class="card-body">
+                    <h5>@Html.DisplayFor(modelItem => item.StartTime)</h5>
+                    <h5>@Html.DisplayFor(modelItem => item.FinishTime)</h5>
+                    @*<div class = "text-end">
+                        <a class="btn btn-outline-primary text-lg" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    </div>*@
+                 </div>
+                  <div class="card-footer  text-muted text-end">
+                    @Html.DisplayFor(modelItem => item.UpdatedAt)
+                  </div>
+               </div>
+          </div>
+      </div>
+}

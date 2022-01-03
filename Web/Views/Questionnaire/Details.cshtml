@@ -34,6 +34,13 @@
                     {
                         <a class="btn btn-warning" asp-action="Publish" asp-route-id="@Model.Questionnaire.Id">Publish</a>
                     }
+                    @if(Model.Questionnaire.Status == QuestionnaireStatus.PUBLISHED)
+                    {
+                        <a class="btn btn-warning" asp-action="End" asp-route-id="@Model.Questionnaire.Id">End</a>
+                    }
+                    @if(Model.Questionnaire.Status == QuestionnaireStatus.PUBLISHED || Model.Questionnaire.Status == QuestionnaireStatus.ENDED){
+                        <a class="btn btn-success" asp-controller="Taken" asp-action="Index" asp-route-id="@Model.Questionnaire.Id">Results</a>
+                    }
                 </div>
             </div>
             

@@ -39,7 +39,10 @@ namespace DataAccess.Concrete
 
         public OptionSelection Get(object parameters, string rawSql)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                return connection.QueryFirstOrDefault<OptionSelection>(rawSql, parameters);
+            }
         }
 
         public OptionSelection GetById(Guid id)

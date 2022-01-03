@@ -16,6 +16,12 @@ namespace Business.Abstract
         void AddOpenAnswer(OpenAnswer openAnswer);
         void Finish(Guid Id);
         TakenQuestionnaire GetById(Guid Id);
+        List<TakenQuestionnaire> GetByQuestionnireId(Guid Id);
+
+
+        OptionSelection GetOptionSelection(Guid OptionAnswerId, Guid TakenQuestionnaireId);
+        List<MultiSelection> GetMultiSelection(Guid MultiAnswerId, Guid TakenQuestionnaireId);
+        OpenAnswer GetOpenAnswer(Guid QuestionId, Guid TakenQuestionnaireId);
 
 
     }

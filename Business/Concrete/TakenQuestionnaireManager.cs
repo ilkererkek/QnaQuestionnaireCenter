@@ -56,5 +56,28 @@ namespace Business.Concrete
         {
             return _takenQuestionnaireRepository.GetById(Id);
         }
+
+        public List<TakenQuestionnaire> GetByQuestionnireId(Guid Id)
+        {
+            return _takenQuestionnaireRepository.GetList(new {Id = Id}, "SELECT * FROM TakenQuestionnaires WHERE QuestionnaireId = @Id");
+        }
+
+        public List<MultiSelection> GetMultiSelection(Guid MultiAnswerId, Guid TakenQuestionnaireId)
+        {
+            return _multiSelectionRepository.GetList(new { MultiAnswerId, TakenQuestionnaireId },
+                "SELECT * FROM MultiSelections WHERE MultiAnswerId = @MultiAnswerId AND TakenQuestionnaireId = @TakenQuestionnaireId");
+        }
+
+        public OpenAnswer GetOpenAnswer(Guid QuestionId, Guid TakenQuestionnaireId)
+        {
+            return _openAnswerRepository.Get(new { QuestionId, TakenQuestionnaireId },
+               "SELECT * FROM OpenAnswers WHERE QuestionId = @QuestionId AND TakenQuestionnaireId = @TakenQuestionnaireId");
+        }
+
+        public OptionSelection GetOptionSelection(Guid OptionAnswerId, Guid TakenQuestionnaireId)
+        {
+            return _optionSelectionRepository.Get(new { OptionAnswerId, TakenQuestionnaireId },
+                "SELECT * FROM OptionSelections WHERE OptionAnswerId = @OptionAnswerId AND TakenQuestionnaireId = @TakenQuestionnaireId");
+        }
     }
 }

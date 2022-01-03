@@ -38,7 +38,11 @@ namespace DataAccess.Concrete
 
         public TakenQuestionnaire Get(object parameters, string rawSql)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                return connection.QueryFirstOrDefault<TakenQuestionnaire>(rawSql, parameters);
+
+            }
         }
 
         public TakenQuestionnaire GetById(Guid id)
@@ -53,7 +57,11 @@ namespace DataAccess.Concrete
 
         public List<TakenQuestionnaire> GetList(object parameters, string rawSql)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
+            {
+                return connection.Query<TakenQuestionnaire>(rawSql, parameters).ToList();
+
+            }
         }
 
         public TakenQuestionnaire GetWithSelections(Guid Id)
