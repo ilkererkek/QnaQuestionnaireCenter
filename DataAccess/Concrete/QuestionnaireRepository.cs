@@ -1,13 +1,13 @@
 ﻿using Dapper;
 using DataAccess.Abstract;
 using Entity.Concrete;
-using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Utils;
+using System.Data.SqlClient;
 
 namespace DataAccess.Concrete
 {
