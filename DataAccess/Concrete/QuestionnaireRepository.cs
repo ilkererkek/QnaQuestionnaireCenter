@@ -105,7 +105,9 @@ namespace DataAccess.Concrete
         }
         public Questionnaire Update(Questionnaire entity)
         {
-            var rawSql = "UPDATE Questionnaires SET Id = @Id , Name = @Name, Description = @Description, IsHidden = @IsHidden, Status = @Status, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt";
+            var rawSql = "UPDATE Questionnaires " +
+                "SET Name = @Name, Description = @Description, IsHidden = @IsHidden, Status = @Status, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt " +
+                "WHERE Id = @Id";
             using (SqlConnection connection = new SqlConnection(_config.ConnectionString))
             {
                 var affectedRows = connection.Execute(rawSql, entity);

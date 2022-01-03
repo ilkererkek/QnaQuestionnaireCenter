@@ -11,6 +11,7 @@ namespace Entity.Concrete
         public OptionAnswer() : base()
         {
             OrderId = 0;
+            Text = "";
         }
         public int OrderId { get; set; }
         public virtual List<OptionSelection>? OptionSelections { get; set; }

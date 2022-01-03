@@ -92,6 +92,21 @@ namespace Web.Controllers
             return NotFound();
         }
 
+        public ActionResult Publish(Guid id)
+        {
+            var questionnaire = _questionnaireService.GetWithQuestions(id);
+            if(questionnaire != null)
+            {
+                if(questionnaire.Status == Entity.Concrete.Enums.QuestionnaireStatus.DRAFT)
+                {
+                    questionnaire.Status = Entity.Concrete.Enums.QuestionnaireStatus.PUBLISHED;
+                }
+                _questionnaireService.Update(questionnaire);
+                return View("Details", new QuestionnaireViewModel() { Questionnaire = questionnaire });
+            }
+            return NotFound();
+        }
+
         // GET: QuestionnaireController/Delete/5
         public ActionResult Delete(Guid id)
         {

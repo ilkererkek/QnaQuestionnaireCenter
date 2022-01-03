@@ -57,6 +57,11 @@ namespace Business.Concrete
             return _questionnaireRepository.GetById(Id);
         }
 
+        public List<Questionnaire> GetPublished()
+        {
+            return _questionnaireRepository.GetList(null, "SELECT TOP 10 * FROM Questionnaires WHERE Status = 2 AND IsHidden = 0 ORDER BY UpdatedAt DESC");
+        }
+
         public Questionnaire GetWithQuestions(Guid Id)
         {
             var questionnaire =  _questionnaireRepository.GetWithQuestions(new { Id = Id }, "SELECT * FROM Questionnaires " +

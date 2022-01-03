@@ -1,5 +1,6 @@
 ﻿using Entity.Concrete;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
@@ -7,6 +8,7 @@ namespace Web.Models
     {
         public string Name { get; set; }
         public string Surname { get; set; }
+        [Range(5,24)]
         public string Password { get; set; }
         public string? Organization { get; set; }
         public string? Occupation { get; set; }

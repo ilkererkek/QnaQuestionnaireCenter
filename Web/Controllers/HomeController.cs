@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Abstract;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Web.Models;
 
@@ -7,16 +8,16 @@ namespace Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IQuestionnaireService _questionnaireService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IQuestionnaireService questionnaireService)
         {
-            _logger = logger;
+            _questionnaireService = questionnaireService;
         }
-
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated) ;
-            return View();
+            var list = _questionnaireService.GetPublished();
+            return View(list);
         }
 
         public IActionResult Privacy()

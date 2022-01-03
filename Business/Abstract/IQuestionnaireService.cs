@@ -17,6 +17,7 @@ namespace Business.Abstract
         List<Questionnaire> GetAll();
         List<Questionnaire> GetAllByUserId(Guid UserId);
         Questionnaire GetWithQuestions(Guid Id);
+        List<Questionnaire> GetPublished();
 
     }
 }
